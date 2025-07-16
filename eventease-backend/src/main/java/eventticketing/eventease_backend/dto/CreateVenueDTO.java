@@ -1,14 +1,17 @@
-// dto/CreateVenueDTO.java
 package eventticketing.eventease_backend.dto;
 
 import lombok.*;
 
-@Data
+import java.util.Map;
+
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class CreateVenueDTO {
     private String name;
     private Integer rows;
     private Integer columns;
-    private String seatMapJson; // JSON string sent from frontend
+    private Map<String, Object> seatMapJson;
 }

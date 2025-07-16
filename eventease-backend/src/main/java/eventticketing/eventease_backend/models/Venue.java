@@ -1,5 +1,8 @@
 package eventticketing.eventease_backend.models;
 
+import java.util.Map;
+
+import eventticketing.eventease_backend.converters.MapToJsonConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,8 +25,11 @@ public class Venue {
     private Integer rows;       // e.g., 10
     private Integer columns;    // e.g., 15
 
-    @Column(columnDefinition = "jsonb")
-    private String seatMapJson; // JSON structure of seat availability
+    @Convert(converter = MapToJsonConverter.class)
+    // The Map<String, Object> field seatMapJson in the Venue entity cannot be stored directly in a SQL database.
+    @Column(name = "seat_map_json")
+    private Map<String, Object> seatMapJson;
+    // JSON structure of seat availability
 
     // @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL)
     // private List<Event> events;

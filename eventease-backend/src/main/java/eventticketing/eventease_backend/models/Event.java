@@ -36,7 +36,7 @@ public class Event {
     private Venue venue;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    // Don’t load the related entity (User) from the database until it is accessed for the first time in code.
+    // If FetctType.LAZY : Don’t load the related entity (User) from the database until it is accessed for the first time in code.
     @JoinColumn(name = "organizer_id", referencedColumnName = "id")
     // In the database table for Event (let's say event), there will be a column called organizer_id.
     // That column will store the ID (primary key) of the User (organizer).

@@ -14,13 +14,14 @@ public class VenueServices {
     private VenueRepository venueRepository;
 
     public Venue createVenue(CreateVenueDTO dto) {
-        Venue venue = Venue.builder()
-                .name(dto.getName())
-                .rows(dto.getRows())
-                .columns(dto.getColumns())
-                .seatMapJson(dto.getSeatMapJson())
-                .build();
+    Venue venue = Venue.builder()
+            .name(dto.getName())
+            .rows(dto.getRows())
+            .columns(dto.getColumns())
+            .seatMapJson(dto.getSeatMapJson()) // this is now a Map
+            .build();
+    // Builder used here for Avoids errors with argument order , Supports optional fields
+    return venueRepository.save(venue);
+}
 
-        return venueRepository.save(venue);
-    }
 }

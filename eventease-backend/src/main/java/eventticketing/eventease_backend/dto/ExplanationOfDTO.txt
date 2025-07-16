@@ -1,0 +1,22 @@
+Purpose of DTO in Spring Boot:
+1. Separation of Concerns
+    DTOs decouple the internal entity model from what is exposed to the client.
+    You might not want to expose your JPA entities directly in the API because:
+    They may contain sensitive data.
+    They may be too complex or have unnecessary fields.
+    You may want to return a simpler, aggregated, or formatted response.
+
+2. Avoid Exposing Internal Models
+    Entities may have relationships (@OneToMany, @ManyToOne) that can cause infinite recursion or data leakage when serialized to JSON.
+
+    Using DTOs allows you to control what fields go in/out of your API.
+
+3. Custom Responses
+    DTOs can shape the response to fit the frontend's exact needs, e.g., combine multiple fields, omit certain values, or rename them.
+
+4. Validation
+    DTOs are often used in combination with validation annotations (@NotNull, @Email, etc.) for input checking in APIs (e.g., form submissions, registrations).
+
+5. Immutability & Simplicity
+    DTOs are usually simple classes with only fields, getters/setters, and constructors, making them lightweight and easy to serialize.
+
