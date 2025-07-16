@@ -3,7 +3,7 @@ package eventticketing.eventease_backend.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+// import java.util.List;
 
 @Entity
 @Getter
@@ -25,6 +25,6 @@ public class Venue {
     @Column(columnDefinition = "jsonb")
     private String seatMapJson; // JSON structure of seat availability
 
-    @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL)
-    private List<Event> events;
+    // @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL)
+    // private List<Event> events;
 }

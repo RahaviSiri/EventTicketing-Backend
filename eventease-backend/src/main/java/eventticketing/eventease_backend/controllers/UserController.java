@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import eventticketing.eventease_backend.Constants;
 import eventticketing.eventease_backend.models.User;
-import eventticketing.eventease_backend.services.UserService;
+import eventticketing.eventease_backend.services.UserServices;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -26,9 +26,8 @@ import io.jsonwebtoken.security.Keys;
 public class UserController {
 
     @Autowired
-    UserService userServices;
+    UserServices userServices;
     
-
     @PostMapping("/register")
     public ResponseEntity<Map<String,String>> registerUser(@RequestBody Map<String, String> userMap) {
         String name = (String) userMap.get("name");
