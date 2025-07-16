@@ -18,10 +18,12 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 255)
     private String title;
 
     @Column(length = 1000)
     private String description;
+
 
     private LocalDateTime dateTime;
 
@@ -29,11 +31,11 @@ public class Event {
 
     private Integer totalSeats;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "venue_id")
     private Venue venue;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     // Don’t load the related entity (User) from the database until it is accessed for the first time in code.
     @JoinColumn(name = "organizer_id", referencedColumnName = "id")
     // In the database table for Event (let's say event), there will be a column called organizer_id.

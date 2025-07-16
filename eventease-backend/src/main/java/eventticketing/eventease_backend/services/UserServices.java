@@ -11,7 +11,7 @@ import eventticketing.eventease_backend.models.User;
 import eventticketing.eventease_backend.repositries.UserRepository;
 
 @Service
-public class UserService {
+public class UserServices {
 
     @Autowired
     private UserRepository userRepository;
