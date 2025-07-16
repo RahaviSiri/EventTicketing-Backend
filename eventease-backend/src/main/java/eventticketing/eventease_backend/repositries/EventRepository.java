@@ -10,6 +10,5 @@ import eventticketing.eventease_backend.models.Event;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event> findByOrganizer_Id(Long userId);
-    // Event getById(Long eventId);
 }
 
