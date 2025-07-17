@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 import eventticketing.eventease_backend.dto.CreateEventDTO;
 import eventticketing.eventease_backend.dto.UpdateEventVenueDTO;
 import eventticketing.eventease_backend.models.Event;
+import eventticketing.eventease_backend.models.User;
 import eventticketing.eventease_backend.services.EventServices;
+import eventticketing.eventease_backend.services.TicketServices;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -14,9 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -25,6 +30,9 @@ public class EventController {
 
     @Autowired
     EventServices eventServices;
+
+    @Autowired
+    TicketServices ticketServices;
 
     @GetMapping("/getEvent")
     public ResponseEntity<List<Event>> getEventByUserId(HttpServletRequest request) {
@@ -46,5 +54,11 @@ public class EventController {
         return ResponseEntity.ok("Venue assigned successfully");
     }
 
+    @GetMapping("/getAttendees/{event_id}")
+    public ResponseEntity<List<User>> getAttendees(HttpServletRequest request, @PathVariable("event_id") Long eventId) {
+        Long userId = (Long) request.getAttribute("userId");
+        List<User> users = ticketServices.getAttendees(userId, eventId);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
     
 }

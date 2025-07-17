@@ -6,6 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import eventticketing.eventease_backend.enums.Role;
 import eventticketing.eventease_backend.exceptions.EtAuthException;
 import eventticketing.eventease_backend.models.User;
 import eventticketing.eventease_backend.repositries.UserRepository;
@@ -39,7 +40,7 @@ public class UserServices {
                         .name(name)
                         .email(email)
                         .password(hashedPassword)
-                        .role("ATTENDEE") // default role; change if needed
+                        .role(Role.ATTENDEE) // default role; change if needed
                         .build();
 
         return userRepository.save(user);
@@ -60,6 +61,31 @@ public class UserServices {
 
         if (!BCrypt.checkpw(password, user.getPassword())) {
             throw new EtAuthException("Invalid email or password");
+        }
+        return user;
+    }
+
+    public User changeUserRole(Long userId, String newRoleStr) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Role currentRole = user.getRole();
+        Role newRole;
+        try {
+            newRole = Role.valueOf(newRoleStr.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid role: " + newRoleStr);
+        }
+        if (currentRole != newRole) {
+            if ((currentRole == Role.ATTENDEE && newRole == Role.ORGANIZER) ||
+                (currentRole == Role.ORGANIZER && newRole == Role.ATTENDEE)) {
+                user.setRole(Role.BOTH);
+            } else if (currentRole == Role.BOTH) {
+                // Already has both roles, optional log
+            } else {
+                user.setRole(newRole);
+            }
+
+            userRepository.save(user);
         }
         return user;
     }
