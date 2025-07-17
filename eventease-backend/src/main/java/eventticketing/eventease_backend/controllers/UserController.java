@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import eventticketing.eventease_backend.Constants;
+import eventticketing.eventease_backend.dto.ChangeRoleRequestDTO;
 import eventticketing.eventease_backend.models.User;
 import eventticketing.eventease_backend.services.UserServices;
 import io.jsonwebtoken.Jwts;
@@ -44,6 +45,12 @@ public class UserController {
         String password = (String) userMap.get("password");
         User user = userServices.validateUser(email, password);
         return new ResponseEntity<>(generateJWTToken(user),HttpStatus.OK);
+    }
+
+    @PostMapping("/changeRole")
+    public ResponseEntity<User> changeUserRole(@RequestBody ChangeRoleRequestDTO requestDTO) {
+        User user = userServices.changeUserRole(requestDTO.getUserId(), requestDTO.getNewRole());
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     private Map <String,String> generateJWTToken (User user){

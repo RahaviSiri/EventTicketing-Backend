@@ -2,6 +2,7 @@ package eventticketing.eventease_backend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import eventticketing.eventease_backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,8 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private String role; // e.g., "ATTENDEE", "ORGANIZER"
+
+    @Enumerated(EnumType.STRING)
+    private Role role; // e.g., "ATTENDEE", "ORGANIZER", "BOTH"
 }
 
